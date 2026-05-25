@@ -1,0 +1,7 @@
+db_password.txt
+__pycache__/ 
+ *.pyc 
+db.sqlite3 
+pg_db.txt
+pg_user.txt 
+ *.txt 
