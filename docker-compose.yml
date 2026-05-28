@@ -29,7 +29,7 @@ services:
       restart_policy:
         condition: any
     depends_on:
-       - db:
+       - db
         
       
 
@@ -45,7 +45,7 @@ services:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d mydb" ]
-      interval: 1m
+      interval: 10s
       timeout: 30s
       retries: 5
       start_period: 30s
