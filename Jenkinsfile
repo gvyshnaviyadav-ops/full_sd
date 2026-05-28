@@ -14,7 +14,7 @@ pipeline {
         stage('Load Library') {
             steps {
                 script {
-                    def libBranch = env.BRANCH_NAME ?: "main"
+                    def libBranch = env.BRANCH_NAME 
                       echo "Loading library branch: ${libBranch}"
 
                      library "my-jenkins-lib@${libBranch}"
