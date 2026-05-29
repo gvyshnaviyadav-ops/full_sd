@@ -1,11 +1,5 @@
 
-// library identifier:"custom-lib@${env.BRANCH_NAME}",retriever:modernSCM(
-//     [
-//         $class:'GitSCMSource',
-//         remote:'https://github.com/gvyshnaviyadav-ops/my-jenkins-lib.git',
-//         credentialsID:'github-pat'
-//         ]
-//     )
+
 
 pipeline {
     agent any
@@ -18,7 +12,6 @@ pipeline {
                       echo "Loading library branch: ${libBranch}"
 
                      library "my-jenkins-lib@${libBranch}"
-                    //library "my-jenkins-lib@${env.BRANCH_NAME}"
                 }
             }
         }
@@ -54,6 +47,7 @@ pipeline {
             )]) {
                 
                 sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                
               sh "docker run  -v \${WORKSPACE}:/workspace --rm aquasec/trivy image --severity CRITICAL --exit-code 0 --format json  --output /workspace/trivy-frontend.json $DOCKER_USER/todo-frontend:${BUILD_NUMBER}"
                sh "docker run  -v \${WORKSPACE}:/workspace --rm aquasec/trivy image --severity CRITICAL --exit-code 0 --format json --output /workspace/trivy-backend.json  $DOCKER_USER/todo-backend:${BUILD_NUMBER}"
               //sh 'ls -la trivy-*.json'
