@@ -1,9 +1,9 @@
 version: "3.9"
 
 networks:
-  app-network:          # ← declare this explicitly
-    driver: overlay     # ← overlay is required for Swarm multi-node
-    attachable: true    # ← allows standalone containers to join (useful for debugging)
+  app-network:          
+    driver: overlay     
+    attachable: true   
 
 services:
   nginx:
@@ -11,7 +11,7 @@ services:
     ports:
       - "80:80"
     networks:
-      - app-network     # ← attach to the named network
+      - app-network     
     configs:
       - source: nginx_conf
         target: /etc/nginx/conf.d/default.conf
@@ -23,7 +23,7 @@ services:
       start_period: 10s
     deploy:
       restart_policy:
-        condition: any   # ← nginx will retry until backend/frontend are up
+        condition: any   
 
   frontend:
     image: ${duser}/todo-frontend:${tag}
@@ -39,7 +39,7 @@ services:
       - app-network
     deploy:
       restart_policy:
-        condition: any   # ← will keep retrying until db is healthy
+        condition: any  
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/api/todos"]
       interval: 10s
